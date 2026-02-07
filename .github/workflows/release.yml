@@ -21,6 +21,12 @@ jobs:
           TAG_NAME=${GITHUB_REF##*/}
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
 
+      - name: Update plugin version in header
+        shell: pwsh
+        run: |
+          $version = $env:TAG_NAME.TrimStart('v')
+          (Get-Content cbk-drolma.php) -replace '(?<=Version: )([0-9]+\.[0-9]+\.[0-9]+)', $version | Set-Content cbk-drolma.php
+
       - name: Create zip file
         run: |
           zip -r "CBK_Drolma-${TAG_NAME}.zip" ./*
