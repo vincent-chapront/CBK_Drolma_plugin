@@ -1,0 +1,46 @@
+name: Generate Plugin Zip on Tag
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up variables
+        id: vars
+        run: |
+          TAG_NAME=${GITHUB_REF##*/}
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+
+      - name: Update plugin version in header
+        shell: pwsh
+        run: |
+          $version = $env:TAG_NAME.TrimStart('v')
+          (Get-Content cbk-drolma.php) -replace '(?<=Version: )([0-9]+\.[0-9]+\.[0-9]+)', $version | Set-Content cbk-drolma.php
+
+      - name: Create zip file
+        run: |
+          zip -r "CBK_Drolma-${TAG_NAME}.zip" ./*
+
+      - name: Upload zip as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CBK_Drolma-${{ env.TAG_NAME }}
+          path: CBK_Drolma-${{ env.TAG_NAME }}.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          files: CBK_Drolma-${{ env.TAG_NAME }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
