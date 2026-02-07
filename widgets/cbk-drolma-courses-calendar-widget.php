@@ -5,7 +5,7 @@ class CBK_Drolma_Courses_Calendar_Widget extends \Elementor\Widget_Base {
 
     public function get_name() { return 'cbk_drolma_course_calendar'; }
 
-    public function get_title() { return 'CBK Drolma Courses Calendar'; }
+    public function get_title() { return 'CBK Drolma Course Calendar'; }
 
     public function get_icon() { return 'eicon-calendar'; }
 
