@@ -63,11 +63,6 @@ class CBK_Drolma_Event_Widget extends \Elementor\Widget_Base {
             'type' => \Elementor\Controls_Manager::MEDIA,
             'default' => [ 'url' => '' ],
         ]);
-        $this->add_control('external_url', [
-            'label' => __('External URL', 'elementor'),
-            'type' => \Elementor\Controls_Manager::URL,
-            'placeholder' => 'https://',
-        ]);
         $this->add_control('image_position', [
             'label' => __('Image Position', 'elementor'),
             'type' => \Elementor\Controls_Manager::SELECT,
@@ -76,6 +71,17 @@ class CBK_Drolma_Event_Widget extends \Elementor\Widget_Base {
                 'right' => __('Right', 'elementor'),
             ],
             'default' => 'left',
+            'label_block' => true,
+        ]);
+        $this->add_control('external_url', [
+            'label' => __('External URL', 'elementor'),
+            'type' => \Elementor\Controls_Manager::URL,
+            'placeholder' => 'https://',
+        ]);
+        $this->add_control('external_url_title', [
+            'label' => __('External URL Title', 'elementor'),
+            'type' => \Elementor\Controls_Manager::TEXT,
+            'default' => '',
             'label_block' => true,
         ]);
         $this->end_controls_section();
@@ -249,6 +255,7 @@ class CBK_Drolma_Event_Widget extends \Elementor\Widget_Base {
         }
         $image_url = $settings['image']['url'];
         $external_url = $settings['external_url']['url'];
+        $external_url_title = $settings['external_url_title'];
         $image_position = isset($settings['image_position']) ? $settings['image_position'] : 'left';
 
         // // Date/time formatting
@@ -275,10 +282,10 @@ class CBK_Drolma_Event_Widget extends \Elementor\Widget_Base {
                 <?php if ($pre_title): ?><h3 class="cbk-drolma-event-widget-pretitle" ><?php echo esc_html($pre_title); ?></h3><?php endif; ?>
                 <h3 class="cbk-drolma-event-widget-title" style="margin:0 0 0.5em 0;"> <?php echo nl2br(esc_html($title)); ?> </h3>
                 <h4 class="cbk-drolma-event-widget-date" style="margin-bottom:0.5em;"><strong><?php echo esc_html($date_str); ?></strong></h4>
-                <h4 class="cbk-drolma-event-widget-location" style="margin-bottom:0.5em;"><?php echo esc_html($location); ?></h4>
-                <div class="cbk-drolma-event-widget-description" style="margin-bottom:0.5em;"> <?php echo $description; ?> </div>
+                <h4 class="cbk-drolma-event-widget-location" style="margin-bottom:0.5em;"><?php echo esc_html($external_url_title); ?></h4>
+                <div class="cbk-drolma-event-widget-description" style="margin-bottom:0.5em; text-align: left;"> <?php echo $description; ?> </div>
                 <?php if ($external_url): ?>
-                    <div class="cbk-drolma-event-widget-link"><a href="<?php echo esc_url($external_url); ?>" target="_blank" rel="noopener" class="elementor-button elementor-size-md"><span><?php _e('Learn More', 'elementor'); ?></span></a></div>
+                    <div class="cbk-drolma-event-widget-link"><a href="<?php echo esc_url($external_url); ?>" target="_blank" rel="noopener" class="elementor-button elementor-size-md"><i aria-hidden="true" class="far fa-calendar-check" style="margin-right:10px;"></i><span><?php echo esc_html($external_url_title); ?></span></a></div>
                 <?php endif; ?>
             </div>
         </div>
