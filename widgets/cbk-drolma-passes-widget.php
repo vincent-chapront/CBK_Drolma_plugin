@@ -145,6 +145,26 @@ class CBK_Drolma_Passes_Widget extends \Elementor\Widget_Base {
                 ],
             ]
         );
+        $this->add_control(
+            'button_text_color_hover',
+            [
+                'label' => __( 'Text Color (Hover)', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .cbk-drolma-pass:hover' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+        $this->add_control(
+            'button_bg_color_hover',
+            [
+                'label' => __( 'Background Color (Hover)', 'elementor' ),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .cbk-drolma-pass:hover' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
         $this->add_group_control(
             \Elementor\Group_Control_Typography::get_type(),
             [
@@ -230,6 +250,7 @@ class CBK_Drolma_Passes_Widget extends \Elementor\Widget_Base {
         $passes = get_posts($args);
 
         echo '<div class="cbk-drolma-passes" style="display: flex; flex-direction: column; gap: 1em; align-items: center;">';
+        echo '<style>.cbk-drolma-pass { transition: color 0.2s, background-color 0.2s; }</style>';
         foreach ($passes as $pass) {
             $month = get_post_meta($pass->ID, '_cbk_drolma_pass_month', true);
             $year = get_post_meta($pass->ID, '_cbk_drolma_pass_year', true);
