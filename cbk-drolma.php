@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: CBK Drolma
- * Description: Manage courses and lessons and display them via Elementor widgets.
+ * Description: A dedicated plugin for the Drolma Rennes center. Adds specific features to make the regular updates easier.
  * Version: 0.0.5
  * Author: Drolma-VCT
  */
