@@ -9,6 +9,7 @@ class CBK_Drolma_Pass_Manager {
         add_action( 'admin_menu', [ $this, 'add_pass_menu' ] );
         add_filter( 'manage_cbk_drolma_pass_posts_columns', [ $this, 'set_custom_columns' ] );
         add_action( 'manage_cbk_drolma_pass_posts_custom_column', [ $this, 'custom_column_content' ], 10, 2 );
+        add_action( 'pre_get_posts', [ $this, 'modify_passes_admin_order' ] );
     }
 
     public function register_post_type() {
@@ -135,6 +136,28 @@ class CBK_Drolma_Pass_Manager {
             if ($url) {
                 echo '<a href="' . esc_url($url) . '" target="_blank">' . esc_html($url) . '</a>';
             }
+        }
+    }
+
+    public function modify_passes_admin_order( $query ) {
+        if ( ! is_admin() || ! $query->is_main_query() ) {
+            return;
+        }
+        if ( $query->get('post_type') === 'cbk_drolma_pass' ) {
+            $query->set( 'orderby', [
+                'year_clause' => 'ASC',
+                'month_clause' => 'ASC',
+            ] );
+            $query->set( 'meta_query', [
+                'year_clause' => [
+                    'key' => '_cbk_drolma_pass_year',
+                    'type' => 'NUMERIC',
+                ],
+                'month_clause' => [
+                    'key' => '_cbk_drolma_pass_month',
+                    'type' => 'NUMERIC',
+                ],
+            ] );
         }
     }
 }
