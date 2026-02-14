@@ -243,8 +243,21 @@ class CBK_Drolma_Passes_Widget extends \Elementor\Widget_Base {
             'post_type' => 'cbk_drolma_pass',
             'post_status' => 'publish',
             'numberposts' => -1,
-            'orderby' => 'meta_value',
-            'meta_key' => '_cbk_drolma_pass_year',
+            'meta_query' => [
+                'relation' => 'AND',
+                [
+                    'key' => '_cbk_drolma_pass_year',
+                    'type' => 'NUMERIC',
+                ],
+                [
+                    'key' => '_cbk_drolma_pass_month',
+                    'type' => 'NUMERIC',
+                ],
+            ],
+            'orderby' => [
+                'meta_value_num' => '_cbk_drolma_pass_year',
+                'meta_value_num2' => '_cbk_drolma_pass_month',
+            ],
             'order' => 'ASC',
         ];
         $passes = get_posts($args);
@@ -259,6 +272,10 @@ class CBK_Drolma_Passes_Widget extends \Elementor\Widget_Base {
 
             $validity_date = sprintf('%04d-%02d-01', $year, $month);
             $show_date = date('Y-m-d', strtotime($validity_date . ' -' . $days_before . ' days'));
+
+            // Only show passes for current or future months
+            $current_month = date('Y-m-01');
+            if ($validity_date < $current_month) continue;
 
             if ($today >= $show_date) {
                 $this->render_pass($month,$year,$url);
