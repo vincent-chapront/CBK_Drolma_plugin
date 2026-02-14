@@ -272,10 +272,10 @@ class CBK_Drolma_Event_Widget extends \Elementor\Widget_Base {
                 <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title); ?>" style="width:100%;height:auto;object-fit:cover;" />
             </div>
             <div class="cbk-drolma-event-widget-info" style="flex:2 1 350px;min-width:250px;display:flex;flex-direction:column;align-items:center;text-align:center;">
-                <?php if ($pre_title): ?><div class="cbk-drolma-event-widget-pretitle" ><?php echo esc_html($pre_title); ?></div><?php endif; ?>
-                <h2 class="cbk-drolma-event-widget-title" style="margin:0 0 0.5em 0;"> <?php echo nl2br(esc_html($title)); ?> </h2>
-                <div class="cbk-drolma-event-widget-date" style="margin-bottom:0.5em;"><strong><?php echo esc_html($date_str); ?></strong></div>
-                <div class="cbk-drolma-event-widget-location" style="margin-bottom:0.5em;"><?php echo esc_html($location); ?></div>
+                <?php if ($pre_title): ?><h3 class="cbk-drolma-event-widget-pretitle" ><?php echo esc_html($pre_title); ?></h3><?php endif; ?>
+                <h3 class="cbk-drolma-event-widget-title" style="margin:0 0 0.5em 0;"> <?php echo nl2br(esc_html($title)); ?> </h3>
+                <h4 class="cbk-drolma-event-widget-date" style="margin-bottom:0.5em;"><strong><?php echo esc_html($date_str); ?></strong></h4>
+                <h4 class="cbk-drolma-event-widget-location" style="margin-bottom:0.5em;"><?php echo esc_html($location); ?></h4>
                 <div class="cbk-drolma-event-widget-description" style="margin-bottom:0.5em;"> <?php echo $description; ?> </div>
                 <?php if ($external_url): ?>
                     <div class="cbk-drolma-event-widget-link"><a href="<?php echo esc_url($external_url); ?>" target="_blank" rel="noopener" class="elementor-button elementor-size-md"><span><?php _e('Learn More', 'elementor'); ?></span></a></div>
