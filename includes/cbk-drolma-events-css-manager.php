@@ -31,8 +31,7 @@ class CBK_Drolma_Events_CSS_Manager {
     public function register_settings() {
         register_setting(
             'cbk_drolma_events_css_settings',
-            $this->option_name,
-            [ $this, 'sanitize_css' ]
+            $this->option_name
         );
     }
 
@@ -40,8 +39,12 @@ class CBK_Drolma_Events_CSS_Manager {
      * Sanitize CSS input
      */
     public function sanitize_css( $input ) {
-        // Basic sanitization - you may want to add more robust CSS validation
-        return wp_strip_all_tags( $input );
+        // Allow raw CSS, strip only PHP tags for security
+        $input= str_replace(['<?', '?>'], '', $input);
+        $input= str_replace(['\"'], '"', $input);
+        $input= str_replace(['\\\\'], '\\', $input);
+
+        return $input;
     }
 
     /**
@@ -86,10 +89,6 @@ class CBK_Drolma_Events_CSS_Manager {
                                 spellcheck="false"
                                 style="font-family: monospace; font-size: 13px;"
                             ><?php echo esc_textarea( $current_css ); ?></textarea>
-                            <p class="description">
-                                Enter your custom CSS here. Example:<br>
-                                <code>.cbk-drolma-event-single { background-color: #f5f5f5; }</code>
-                            </p>
                         </td>
                     </tr>
                 </table>
@@ -104,20 +103,6 @@ class CBK_Drolma_Events_CSS_Manager {
                     >
                 </p>
             </form>
-
-            <div class="card" style="max-width: 800px; margin-top: 20px;">
-                <h2>CSS Classes Reference</h2>
-                <p>Here are some useful classes you can target in your custom CSS:</p>
-                <ul style="list-style: disc; margin-left: 20px;">
-                    <li><code>.cbk-drolma-event-single</code> - Main event page container</li>
-                    <li><code>.cbk-drolma-event-category</code> - Event category heading</li>
-                    <li><code>.cbk-drolma-event-hosts</code> - Hosts section</li>
-                    <li><code>.cbk-drolma-event-image</code> - Event image container</li>
-                    <li><code>.cbk-drolma-event-content</code> - Event content area</li>
-                    <li><code>.cbk-drolma-event-meta</code> - Event metadata section</li>
-                    <li><code>.cbk-drolma-event-btn</code> - External link button</li>
-                </ul>
-            </div>
         </div>
 
         <style>
