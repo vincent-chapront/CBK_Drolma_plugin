@@ -208,13 +208,13 @@ get_header();
     padding:10px;
 }
 
-.separator{
+.cbk_drolma_event_separator{
     width: 100px;
     height: 3px;
     background-color: rgb(228, 197, 6);
 }
 
-.separator2{
+.cbk_drolma_event_separator2{
     width: 100px;
     height: 3px;
     background-color: #6EB5B2;
@@ -224,7 +224,7 @@ get_header();
     <div class="cbk_event_category"><span><?php echo $categories[0]->name; ?></span></div>
     <div class="cbk_event_title"><span><?php the_title(); ?></span></div>
     <div class="cbk_event_date"><span><?php echo render_date($post); ?></span></div>
-    <div class="separator cbk_event_date_separator_location"></div>
+    <div class="cbk_drolma_event_separator cbk_event_date_separator_location"></div>
     <div class="cbk_event_location"><span><?php echo esc_html($location); ?></span></div>
     <div class="cbk_event_image">
         <img
@@ -255,7 +255,7 @@ get_header();
     </div>
     <div class="cbk_event_program">
       <h4 class="cbk_event_program_title">PROGRAMME</h4>
-      <div class="separator2"></div>
+      <div class="cbk_drolma_event_separator2"></div>
       <?php foreach ($program_items as $program_item) :
           ?>
           <div class="cbk_event_program_item">
